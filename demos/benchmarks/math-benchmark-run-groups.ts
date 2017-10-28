@@ -16,6 +16,8 @@
  */
 
 import {BenchmarkRun, BenchmarkRunGroup} from './benchmark';
+// tslint:disable-next-line:max-line-length
+import {BatchNormalization3DCPUBenchmark} from './batchnormalization3d_benchmark';
 import {ConvBenchmarkParams, ConvGPUBenchmark} from './conv_benchmarks';
 // tslint:disable-next-line:max-line-length
 import {ConvTransposedBenchmarkParams, ConvTransposedGPUBenchmark} from './conv_transposed_benchmarks';
@@ -40,6 +42,18 @@ export function getRunGroups(): BenchmarkRunGroup[] {
     benchmarkRuns: [
       new BenchmarkRun('mulmat_gpu', new MatmulGPUBenchmark()),
       new BenchmarkRun('mulmat_cpu', new MatmulCPUBenchmark())
+    ],
+    params: {}
+  });
+
+  groups.push({
+    name: 'Batch Normaliztion 3D:',
+    min: 0,
+    max: 512,
+    stepSize: 64,
+    stepToSizeTransformation: (step: number) => Math.max(1, step),
+    benchmarkRuns: [
+      new BenchmarkRun('batchnorm_cpu', new BatchNormalization3DCPUBenchmark())
     ],
     params: {}
   });
